@@ -138,29 +138,19 @@ void searchContact(User address_book[], int &count)
 
 
     string line;
-    ifstream myfile ("address_book.txt");
+    ifstream addressFile ("address_book.txt");
 
-    if (myfile.is_open())
+    if (addressFile.is_open())
     {
-        while ( getline (myfile,line) )
+        while ( getline (addressFile,line) )
         {
             if (findName == line)
             {
                 matchFound = true;
                 cout << "MATCH IS FOUND" << endl;
-                for (int i = 0; i < count; i++)
-                {
-                    if (address_book[i].name == findName)
-                    {
-                        cout << "Here is the user's information" << endl;
-                        cout << address_book[i].name << endl;
-                        cout << address_book[i].phone << endl;
-                        cout << address_book[i].address << endl;
-                    }
-                }
             }
         }
-        myfile.close();
+        addressFile.close();
         if (!matchFound)
         {
             cout << "There was no match for that entry" << endl;
@@ -192,31 +182,15 @@ void addEntry(User address_book[], int &count)
 
     ofstream dataFile; 
 
-    if (count == 0)
-    {
-        cout << "Opening file...\n"; 
-        dataFile.open("address_book.txt", ios::out); 
-        cout << "Now writing data to the file.\n"; 
-        dataFile << "Name: " << newUser.name << endl; // Write line 1
-        dataFile << "Phone: " << newUser.phone << endl; // Write line 2
-        dataFile << "Address: " << newUser.address << endl; // Write line 3
-
-        cout << "Now closing the file.\n";
-        dataFile.close(); // Close the file 
-    }
-
-    else if (count > 0)
-    {
-        cout << "Opening the file again...\n";
-        // Open the file in append mode.
-        dataFile.open("address_book.txt", ios::out | ios::app);
-        cout << "Writing more data to the file.\n";
-        dataFile << "Name: " << newUser.name << endl; // Write line 1
-        dataFile << "Phone: " << newUser.phone << endl; // Write line 2
-        dataFile << "Address: " << newUser.address << endl; // Write line 3
-        cout << "Now closing the file.\n";
-        dataFile.close(); // Close the file 
-    }
+    cout << "Opening the file...\n";
+    // Open the file in append mode.
+    dataFile.open("address_book.txt",  ios::binary | ios::out | ios::app);
+    cout << "Writing more data to the file.\n";
+    dataFile << "Name: " << newUser.name << endl; // Write line 1
+    dataFile << "Phone: " << newUser.phone << endl; // Write line 2
+    dataFile << "Address: " << newUser.address << endl; // Write line 3
+    cout << "Now closing the file.\n";
+    dataFile.close(); // Close the file 
 }
 
 void displayMenu()
